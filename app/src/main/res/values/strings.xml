@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GoMus</string>
+    <string name="button_search">Search Action Button</string>
+    <string name="button_settings">Settings Action Button</string>
+    <string name="image_tour">Tour Image</string>
 </resources>

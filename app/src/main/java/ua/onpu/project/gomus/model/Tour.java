@@ -7,8 +7,16 @@ public class Tour {
     private String image;
     private ArrayList<Location> locations = new ArrayList<>();
 
-    //Empty constructor
+    // Empty constructor
     public Tour() {
+    }
+
+    /**
+     * One param constructor
+     * @param name  String name of tour
+     */
+    public Tour(String name){
+        this.name = name;
     }
 
     /**

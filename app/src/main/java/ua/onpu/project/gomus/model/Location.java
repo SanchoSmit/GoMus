@@ -8,7 +8,7 @@ public class Location {
     private String image;
     private float rating;
 
-    //Empty constructor
+    // Empty constructor
     public Location() {
     }
 
