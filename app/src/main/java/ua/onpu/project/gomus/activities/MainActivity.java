@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import ua.onpu.project.gomus.R;
-import ua.onpu.project.gomus.adapter.ToursAdapter;
+import ua.onpu.project.gomus.adapters.ToursAdapter;
 import ua.onpu.project.gomus.model.Tour;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         // Toolbar initialization
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+
 
         // CollapsingToolbar initialization
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar_main);

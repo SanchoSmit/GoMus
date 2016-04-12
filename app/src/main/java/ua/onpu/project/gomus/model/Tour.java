@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Tour {
     private String name;
     private String image;
+    private String description;
     private ArrayList<Location> locations = new ArrayList<>();
 
     // Empty constructor
@@ -49,6 +50,22 @@ public class Tour {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+
+    /**
+     * Getter for tour description
+     * @return String description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Setter for tour description
+     * @param description String description
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**

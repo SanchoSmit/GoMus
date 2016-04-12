@@ -1,4 +1,4 @@
-package ua.onpu.project.gomus.adapter;
+package ua.onpu.project.gomus.adapters;
 
 
 import android.support.v7.widget.RecyclerView;
