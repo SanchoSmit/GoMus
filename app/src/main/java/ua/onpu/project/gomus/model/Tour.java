@@ -93,6 +93,7 @@ public class Tour {
         return "Tour{" +
                 "name='" + name + '\'' +
                 ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
                 ", locations=" + locations +
                 '}';
     }

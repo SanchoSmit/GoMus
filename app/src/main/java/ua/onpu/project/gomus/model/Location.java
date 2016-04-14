@@ -3,6 +3,9 @@ package ua.onpu.project.gomus.model;
 public class Location {
     private String name;
     private String information;
+    private String address;
+    private String phone;
+    private String website;
     private double lat;
     private double lon;
     private String image;
@@ -42,6 +45,54 @@ public class Location {
      */
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    /**
+     * Getter for address of location
+     * @return String address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Setter for address of location
+     * @param address String address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * Getter for phone number of location
+     * @return String phone number
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * Setter for phone number of location
+     * @param phone String phone number
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * Getter for location website
+     * @return String website URL
+     */
+    public String getWebsite() {
+        return website;
+    }
+
+    /**
+     * Setter for location website
+     * @param website String website URL
+     */
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     /**
@@ -117,9 +168,13 @@ public class Location {
         return "Location{" +
                 "name='" + name + '\'' +
                 ", information='" + information + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", website='" + website + '\'' +
                 ", lat=" + lat +
                 ", lon=" + lon +
                 ", image='" + image + '\'' +
+                ", rating=" + rating +
                 '}';
     }
 }
