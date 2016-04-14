@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import ua.onpu.project.gomus.R;
 import ua.onpu.project.gomus.adapters.ToursAdapter;
+import ua.onpu.project.gomus.database.DatabaseAccess;
 import ua.onpu.project.gomus.model.Tour;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ToursAdapter adapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ArrayList<Tour> tours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-
         // CollapsingToolbar initialization
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar_main);
         collapsingToolbarLayout.setTitle("Tours");
+
+        //Database init
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        tours = databaseAccess.getTours();
+        databaseAccess.close();
 
         // RecyclerView initialization
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_main);
@@ -66,33 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Update recyclerView data
     private void updateRecyclerView() {
-        adapter = new ToursAdapter(getTestData());
+        adapter = new ToursAdapter(tours);
         recyclerView.setAdapter(adapter);
     }
 
-    /**
-     *
-     * Test method for getting data.
-     * Delete after implementing database!
-     * @return ArrayList<Tour> list of tours
-     *
-     */
-    private ArrayList<Tour> getTestData(){
-
-        ArrayList<Tour> testList = new ArrayList<>();
-
-        // Adding some data
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Deribasovskaya Street"));
-        testList.add(new Tour("Long text for testinggggggggggg ggggggggggg"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-        testList.add(new Tour("Opera House"));
-
-        return testList;
-    }
 }

@@ -1,6 +1,7 @@
 package ua.onpu.project.gomus.model;
 
 public class Location {
+    private int id;
     private String name;
     private String information;
     private String address;
@@ -13,6 +14,22 @@ public class Location {
 
     // Empty constructor
     public Location() {
+    }
+
+    /**
+     * Getter for location id
+     * @return
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Setter for location id
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

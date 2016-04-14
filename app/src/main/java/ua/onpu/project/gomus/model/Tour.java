@@ -3,6 +3,7 @@ package ua.onpu.project.gomus.model;
 import java.util.ArrayList;
 
 public class Tour {
+    private int id;
     private String name;
     private String image;
     private String description;
@@ -18,6 +19,22 @@ public class Tour {
      */
     public Tour(String name){
         this.name = name;
+    }
+
+    /**
+     * Getter for tour id
+     * @return
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Setter for tour id
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

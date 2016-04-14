@@ -31,11 +31,10 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
 
     @Override
     public void onBindViewHolder(ToursViewHolder holder, int position) {
-
+        final Tour currentdata = data.get(position);
         // Shows 1 line of the text
         holder.name.setMaxLines(1);
-
-        holder.name.setText(data.get(position).getName());
+        holder.name.setText(currentdata.getName());
 
         // Test image
         holder.image.setBackgroundResource(R.drawable.image_test);
