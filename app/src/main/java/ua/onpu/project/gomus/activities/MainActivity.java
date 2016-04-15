@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private ToursAdapter adapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private LinearLayout bestLocation1;
+    private LinearLayout bestLocation2;
+    private TextView bestLocationText1;
+    private TextView bestLocationText2;
     private ArrayList<Tour> tours;
 
     @Override
@@ -35,9 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         // CollapsingToolbar initialization
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar_main);
-        collapsingToolbarLayout.setTitle("Tours");
+        collapsingToolbarLayout.setTitle(getResources().getString(R.string.tours));
 
-        //Database init
+        // Best locations initialization
+        bestLocation1 = (LinearLayout) findViewById(R.id.best_location1);
+        bestLocation2 = (LinearLayout) findViewById(R.id.best_location2);
+        bestLocationText1 = (TextView) findViewById(R.id.best_location_text1);
+        bestLocationText2 = (TextView) findViewById(R.id.best_location_text2);
+
+        // Database init
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
         tours = databaseAccess.getTours();
@@ -48,7 +61,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         updateRecyclerView();
+        updateBestLocations();
+
+        // Best locations onClick listeners
+        bestLocation1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: onClick
+            }
+        });
+        bestLocation2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: onClick
+            }
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
     private void updateRecyclerView() {
         adapter = new ToursAdapter(tours);
         recyclerView.setAdapter(adapter);
+    }
+
+    // Update best location data
+    private void updateBestLocations() {
+        bestLocation1.setBackgroundResource(R.drawable.image_test);
+        bestLocation2.setBackgroundResource(R.drawable.image_test);
+        bestLocationText1.setText("Test");
+        bestLocationText2.setText("Test");
     }
 
 }
