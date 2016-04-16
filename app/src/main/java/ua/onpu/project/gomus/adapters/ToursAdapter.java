@@ -33,12 +33,13 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
 
     @Override
     public void onBindViewHolder(ToursViewHolder holder, int position) {
-        final Tour currentdata = data.get(position);
-        // Shows 1 line of the text
-        holder.name.setMaxLines(1);
-        holder.name.setText(currentdata.getName());
-        //Image
-        Picasso.with(holder.image.getContext()).load(currentdata.getImage()).into(holder.image);
+        final Tour currentData = data.get(position);
+
+        holder.name.setText(currentData.getName());
+        holder.description.setText(currentData.getDescription());
+
+        // Image
+        Picasso.with(holder.image.getContext()).load(currentData.getImage()).into(holder.image);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +57,7 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
 
     public static class ToursViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+        TextView description;
         ImageView image;
         LinearLayout layout; // Container
 
@@ -63,6 +65,7 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.tour_name);
+            description = (TextView) itemView.findViewById(R.id.tour_description);
             image = (ImageView) itemView.findViewById(R.id.tour_image);
             layout = (LinearLayout) itemView.findViewById(R.id.tour_layout);
 
