@@ -7,52 +7,68 @@
     android:background="@color/colorWhite"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/best_location1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_weight="1" >
 
+        <ImageView
+            android:id="@+id/best_location_image1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="@color/colorBlackOpacity"
-            android:layout_gravity="bottom">
+            android:layout_alignParentBottom="true">
 
             <TextView
                 android:id="@+id/best_location_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
                 android:layout_marginLeft="3dp"
                 android:maxLines="1"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/best_location2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_weight="1" >
 
+        <ImageView
+            android:id="@+id/best_location_image2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="@color/colorBlackOpacity"
-            android:layout_gravity="bottom">
+            android:layout_alignParentBottom="true">
 
             <TextView
                 android:id="@+id/best_location_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
                 android:layout_marginLeft="3dp"
                 android:maxLines="1"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
