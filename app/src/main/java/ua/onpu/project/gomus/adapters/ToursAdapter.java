@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import ua.onpu.project.gomus.R;
@@ -35,9 +37,8 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
         // Shows 1 line of the text
         holder.name.setMaxLines(1);
         holder.name.setText(currentdata.getName());
-
-        // Test image
-        holder.image.setBackgroundResource(R.drawable.image_test);
+        //Image
+        Picasso.with(holder.image.getContext()).load(currentdata.getImage()).into(holder.image);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override

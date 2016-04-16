@@ -101,6 +101,10 @@ public class Tour {
         this.locations = locations;
     }
 
+    public void addLocation(Location location) {
+        this.locations.add(location);
+    }
+
     /**
      * Modified toString() method
      * @return  String value of class fields

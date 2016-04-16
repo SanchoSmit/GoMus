@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import ua.onpu.project.gomus.R;
 import ua.onpu.project.gomus.adapters.ToursAdapter;
 import ua.onpu.project.gomus.database.DatabaseAccess;
+import ua.onpu.project.gomus.model.Location;
 import ua.onpu.project.gomus.model.Tour;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView bestLocationText1;
     private TextView bestLocationText2;
     private ArrayList<Tour> tours;
+    private ArrayList<Location> locations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Toolbar initialization
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -53,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
         // Database init
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
-        tours = databaseAccess.getTours();
+        tours = databaseAccess.getTours("en");
+        locations = databaseAccess.getLocations("en");
+        databaseAccess.getToursLocations(locations,tours);
         databaseAccess.close();
 
         // RecyclerView initialization
@@ -109,10 +114,19 @@ public class MainActivity extends AppCompatActivity {
 
     // Update best location data
     private void updateBestLocations() {
-        bestLocation1.setBackgroundResource(R.drawable.image_test);
-        bestLocation2.setBackgroundResource(R.drawable.image_test);
-        bestLocationText1.setText("Test");
-        bestLocationText2.setText("Test");
+        for(Location location: locations) {
+            if(location.getRating()==4.0){
+                //TODO change image .into() resourse
+                //Picasso.with(bestLocation1.getContext()).load(location.getImage()).into(bestLocation1);
+                bestLocationText2.setText(location.getName());
+            }
+            else if(location.getRating()==5.0)
+            {
+                //Picasso.with(bestLocation2.getContext()).load(location.getImage()).into(bestLocation2);
+                bestLocationText2.setText(location.getName());
+            }
+
+        }
     }
 
 }
