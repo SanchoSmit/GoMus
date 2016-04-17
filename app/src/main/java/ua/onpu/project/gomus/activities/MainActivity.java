@@ -117,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 // Expand AppBarLayout
                 appBarLayout.setExpanded(true);
+
+                // Scroll to start position
+                recyclerView.scrollToPosition(0);
+
                 return true;
             }
         });
@@ -136,9 +140,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
+        // Scroll to start position
+        recyclerView.scrollToPosition(0);
+
         final ArrayList<Tour> filteredListData = filter(tours, newText);
         adapter.animateTo(filteredListData);
-        recyclerView.scrollToPosition(0);
         return true;
     }
 
