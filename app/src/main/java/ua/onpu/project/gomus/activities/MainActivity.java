@@ -1,6 +1,8 @@
 package ua.onpu.project.gomus.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private RecyclerView recyclerView;
     private ToursAdapter adapter;
+    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private RelativeLayout bestLocation1;
@@ -52,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         locations = databaseAccess.getLocations("en");
         databaseAccess.getToursLocations(locations,tours);
         databaseAccess.close();
+
+        // AppBarLayout initialization
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBar_main);
 
         // Toolbar initialization
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -94,28 +100,59 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //Search menu item text change listener
-        final MenuItem item = menu.findItem(R.id.button_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        MenuItem searchItem = menu.findItem(R.id.button_search);
+
+        // Search menu item expand listener
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+
+                // Collapse AppBarLayout
+                appBarLayout.setExpanded(false);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                // Expand AppBarLayout
+                appBarLayout.setExpanded(true);
+                return true;
+            }
+        });
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        // Search menu item text change listener
         searchView.setOnQueryTextListener(this);
 
         return true;
     }
 
     @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final ArrayList<Tour> filteredListData = filter(tours, newText);
+        adapter.animateTo(filteredListData);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.button_search:
-                // TODO: search
-                return true;
-            case R.id.button_settings:
+        if (item.getItemId() == R.id.button_settings){
                 // TODO: settings
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     // Update recyclerView data
     private void updateRecyclerView() {
@@ -139,18 +176,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        final ArrayList<Tour> filteredListdata = filter(tours, newText);
-        adapter.animateTo(filteredListdata);
-        return true;
-    }
-
     /**
      * Filter method
      * @param items Default list of items
@@ -159,13 +184,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
      */
     private ArrayList<Tour> filter(ArrayList<Tour> items, String query) {
         query = query.toLowerCase();
-        final ArrayList<Tour> filteredListdata = new ArrayList<>();
+        final ArrayList<Tour> filteredListData = new ArrayList<>();
         for (Tour data : items) {
-            final String diarytext = data.getName().toLowerCase() + " " + data.getDescription().toLowerCase();
-            if (diarytext.contains(query)){
-                filteredListdata.add(data);
+            final String diaryText = data.getName().toLowerCase() + " " + data.getDescription().toLowerCase();
+            if (diaryText.contains(query)){
+                filteredListData.add(data);
             }
         }
-        return filteredListdata;
+        return filteredListData;
     }
 }
