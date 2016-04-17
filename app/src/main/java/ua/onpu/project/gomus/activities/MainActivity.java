@@ -2,9 +2,11 @@ package ua.onpu.project.gomus.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +25,7 @@ import ua.onpu.project.gomus.database.DatabaseAccess;
 import ua.onpu.project.gomus.model.Location;
 import ua.onpu.project.gomus.model.Tour;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private RecyclerView recyclerView;
     private ToursAdapter adapter;
@@ -35,14 +37,21 @@ public class MainActivity extends AppCompatActivity {
     private ImageView bestLocationImage2;
     private TextView bestLocationText1;
     private TextView bestLocationText2;
-    private ArrayList<Tour> tours;
-    private ArrayList<Location> locations;
+    private ArrayList<Tour>  tours = new ArrayList<>();
+    private ArrayList<Location> locations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Database init
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        tours = databaseAccess.getTours("en");
+        locations = databaseAccess.getLocations("en");
+        databaseAccess.getToursLocations(locations,tours);
+        databaseAccess.close();
 
         // Toolbar initialization
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -59,14 +68,6 @@ public class MainActivity extends AppCompatActivity {
         bestLocationImage2 = (ImageView) findViewById(R.id.best_location_image2);
         bestLocationText1 = (TextView) findViewById(R.id.best_location_text1);
         bestLocationText2 = (TextView) findViewById(R.id.best_location_text2);
-
-        // Database init
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-        tours = databaseAccess.getTours("en");
-        locations = databaseAccess.getLocations("en");
-        databaseAccess.getToursLocations(locations,tours);
-        databaseAccess.close();
 
         // RecyclerView initialization
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_main);
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        //Search menu item text change listener
+        final MenuItem item = menu.findItem(R.id.button_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -133,4 +139,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final ArrayList<Tour> filteredListdata = filter(tours, newText);
+        adapter.animateTo(filteredListdata);
+        return true;
+    }
+
+    /**
+     * Filter method
+     * @param items Default list of items
+     * @param query Input text
+     * @return Filtered list of data
+     */
+    private ArrayList<Tour> filter(ArrayList<Tour> items, String query) {
+        query = query.toLowerCase();
+        final ArrayList<Tour> filteredListdata = new ArrayList<>();
+        for (Tour data : items) {
+            final String diarytext = data.getName().toLowerCase() + " " + data.getDescription().toLowerCase();
+            if (diarytext.contains(query)){
+                filteredListdata.add(data);
+            }
+        }
+        return filteredListdata;
+    }
 }

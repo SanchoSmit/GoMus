@@ -21,8 +21,8 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
     // List of tours
     private ArrayList<Tour> data;
 
-    public ToursAdapter(ArrayList<Tour> data) {
-        this.data = data;
+    public ToursAdapter(ArrayList<Tour> tours) {
+        data = new ArrayList<>(tours);
     }
 
     @Override
@@ -70,5 +70,87 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
             layout = (LinearLayout) itemView.findViewById(R.id.tour_layout);
 
         }
+    }
+
+    /**
+     * Method that animate items in RecyclerView
+     * @param newdata New list of data
+     */
+    public void animateTo(ArrayList<Tour> newdata) {
+        applyAndAnimateRemovals(newdata);
+        applyAndAnimateAdditions(newdata);
+        applyAndAnimateMovedItems(newdata);
+    }
+
+    /**
+     * Method that animate list after removing the item
+     * @param newdata New list of data
+     */
+    private void applyAndAnimateRemovals(ArrayList<Tour> newdata) {
+        for (int i = data.size() - 1; i >= 0; i--) {
+            final Tour mData = data.get(i);
+            if (!newdata.contains(mData)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    /**
+     * Method that animate list after adding the item
+     * @param newdata New list of data
+     */
+    private void applyAndAnimateAdditions(ArrayList<Tour> newdata) {
+        for (int i = 0, count = newdata.size(); i < count; i++) {
+            final Tour mData = newdata.get(i);
+            if (!data.contains(mData)) {
+                addItem(i, mData);
+            }
+        }
+    }
+
+    /**
+     * Method that animate and move items
+     * @param newdata New list of data
+     */
+    private void applyAndAnimateMovedItems(ArrayList<Tour> newdata) {
+        for (int toPosition = newdata.size() - 1; toPosition >= 0; toPosition--) {
+            final Tour mData = newdata.get(toPosition);
+            final int fromPosition = data.indexOf(mData);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    /**
+     * Method that add item to a list
+     * @param position Item position in a list
+     * @param tour_data New item
+     */
+    public void addItem(int position, Tour tour_data) {
+        data.add(position, tour_data);
+        notifyItemInserted(position);
+    }
+
+    /**
+     * Method that move item in a list
+     * @param fromPosition Old position of item
+     * @param toPosition New position of item
+     */
+    public void moveItem(int fromPosition, int toPosition) {
+        final Tour tour_data = data.remove(fromPosition);
+        data.add(toPosition, tour_data);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    /**
+     * Method that remove item from a list
+     * @param position Item position in a list
+     * @return New list
+     */
+    public Tour removeItem(int position) {
+        final Tour tour_data = data.remove(position);
+        notifyItemRemoved(position);
+        return tour_data;
     }
 }
