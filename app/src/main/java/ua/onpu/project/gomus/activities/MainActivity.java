@@ -1,7 +1,6 @@
 package ua.onpu.project.gomus.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
@@ -139,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String newText) {
         final ArrayList<Tour> filteredListData = filter(tours, newText);
         adapter.animateTo(filteredListData);
+        recyclerView.scrollToPosition(0);
         return true;
     }
 
