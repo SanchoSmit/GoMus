@@ -1,5 +1,7 @@
 package ua.onpu.project.gomus.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -39,21 +41,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ImageView bestLocationImage2;
     private TextView bestLocationText1;
     private TextView bestLocationText2;
-    private ArrayList<Tour>  tours = new ArrayList<>();
+    private ArrayList<Tour> tours = new ArrayList<>();
     private ArrayList<Location> locations = new ArrayList<>();
+    private DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Database init
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-        tours = databaseAccess.getTours("en");
-        locations = databaseAccess.getLocations("en");
-        databaseAccess.getToursLocations(locations,tours);
-        databaseAccess.close();
 
         // AppBarLayout initialization
         appBarLayout = (AppBarLayout) findViewById(R.id.appBar_main);
@@ -78,6 +73,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Database init
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        tours = databaseAccess.getTours(getLanguage());
+        locations = databaseAccess.getLocations(getLanguage());
+        databaseAccess.getToursLocations(locations,tours);
+        databaseAccess.close();
+
+        // Updating views
         updateRecyclerView();
         updateBestLocations();
 
@@ -94,6 +98,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 // TODO: onClick
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+
+        // TODO: Upgrade texts of Tours and Locations
+        super.onResume();
     }
 
     @Override
@@ -153,13 +164,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.button_settings){
-                // TODO: settings
-                return true;
+
+            // Open SettingsActivity
+            Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
+            startActivity(settingsActivity);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     // Update recyclerView data
     private void updateRecyclerView() {
@@ -199,5 +212,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         return filteredListData;
+    }
+
+    /**
+     * Language getting method
+     * @return application language
+     */
+    private String getLanguage(){
+        SharedPreferences preferences = getSharedPreferences("GoMusSetting", MODE_PRIVATE);
+        return preferences.getString("application_language", "en");
     }
 }
