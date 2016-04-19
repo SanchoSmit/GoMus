@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ImageView bestLocationImage2;
     private TextView bestLocationText1;
     private TextView bestLocationText2;
+    private ArrayList<Location> best_locations = new ArrayList<>();
     private ArrayList<Tour> tours = new ArrayList<>();
     private ArrayList<Location> locations = new ArrayList<>();
     private DatabaseAccess databaseAccess;
@@ -81,21 +82,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         databaseAccess.getToursLocations(locations,tours);
         databaseAccess.close();
 
+        //Best locations init
+        best_locations = getBestLocations(locations);
+
         // Updating views
         updateRecyclerView();
-        updateBestLocations();
+        updateBestLocations(best_locations);
 
         // Best locations onClick listeners
         bestLocation1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: onClick
+                Intent intent1 = new Intent(MainActivity.this,LocationViewActivity.class);
+                intent1.putExtra("best_location",best_locations.get(0));
+                startActivity(intent1);
             }
         });
         bestLocation2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: onClick
+                Intent intent2 = new Intent(MainActivity.this,LocationViewActivity.class);
+                intent2.putExtra("best_location",best_locations.get(1));
+                startActivity(intent2);
             }
         });
     }
@@ -181,19 +189,32 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     // Update best location data
-    private void updateBestLocations() {
-        for(Location location: locations) {
-            if(location.getRating()==4.0){
-                Picasso.with(bestLocationImage1.getContext()).load(location.getImage()).into(bestLocationImage1);
-                bestLocationText1.setText(location.getName());
-            }
-            else if(location.getRating()==5.0)
-            {
-                Picasso.with(bestLocationImage2.getContext()).load(location.getImage()).into(bestLocationImage2);
-                bestLocationText2.setText(location.getName());
-            }
+    private void updateBestLocations(ArrayList<Location> location) {
+                //Best location #1
+                Picasso.with(bestLocationImage1.getContext()).load(location.get(0).getImage()).into(bestLocationImage1);
+                bestLocationText1.setText(location.get(0).getName());
+                //Best location #2
+                Picasso.with(bestLocationImage2.getContext()).load(location.get(1).getImage()).into(bestLocationImage2);
+                bestLocationText2.setText(location.get(1).getName());
+    }
 
+    /**
+     * Getting best locations method
+     * @param location list of all locations
+     * @return two best locations
+     */
+    private ArrayList<Location> getBestLocations(ArrayList<Location> location) {
+        ArrayList<Location> best_locations = new ArrayList<>();
+        for(Location loc: location) {
+            if(loc.getRating()==4.0){
+                best_locations.add(loc);
+            }
+            else if(loc.getRating()==5.0)
+            {
+                best_locations.add(loc);
+            }
         }
+        return best_locations;
     }
 
     /**
