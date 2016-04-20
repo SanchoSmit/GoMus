@@ -11,4 +11,5 @@
     <style name="AppBarTextAppearance" parent="TextAppearance.AppCompat.Title.Inverse">
         <item name="android:textSize">15sp</item>
     </style>
+
 </resources>
