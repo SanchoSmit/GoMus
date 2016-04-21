@@ -13,7 +13,7 @@
     </style>
 
     <style name="AppBarTextAppearanceDark" parent="">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 

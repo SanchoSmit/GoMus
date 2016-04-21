@@ -17,7 +17,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:expandedTitleMarginBottom="15dp"
+            app:expandedTitleMarginBottom="50dp"
             app:expandedTitleMarginStart="15dp"
             app:expandedTitleTextAppearance="@style/AppBarTextAppearanceDark"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="45dp"
                     android:textSize="14sp"
                     android:textColor="@color/colorWhite"
                     android:layout_gravity="center_vertical"/>
@@ -82,25 +82,7 @@
                 android:lineSpacingExtra="6dp"
                 android:padding="@dimen/activity_horizontal_margin"
                 />
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/location_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:textSize="15sp"
-                android:lineSpacingExtra="6dp"
-                android:padding="@dimen/activity_horizontal_margin"
-                />
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/location_website"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:lineSpacingExtra="6dp"
-                android:padding="@dimen/activity_horizontal_margin"
-                />
+
 
         </LinearLayout>
 

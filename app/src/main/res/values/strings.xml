@@ -22,4 +22,8 @@
         <item>Ukrainian</item>
     </string-array>
 
+    <string name="title_activity_location_map">LocationMapActivity</string>
+    <string name="button_info">Info</string>
+
+
 </resources>
