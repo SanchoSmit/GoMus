@@ -16,6 +16,7 @@
         GoMus 2016
     </string>
     <string name="button_map">Map</string>
+    <string name="settings_title">Settings</string>
 
     <string-array name="application_languages">
         <item>English</item>
