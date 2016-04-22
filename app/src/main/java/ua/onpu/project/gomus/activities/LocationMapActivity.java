@@ -20,7 +20,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
 
     private GoogleMap mMap;
     private Location location;
-    private final int zoom = 18;
+    private static final int CAMERA_ZOOM = 16;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,8 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         //Getting intent with extras
         Intent intent1 = getIntent();
         Bundle bd1 = intent1.getExtras();
-        if(bd1 != null)
-        {
-            location = (Location)bd1.get("location");
+        if (bd1 != null) {
+            location = (Location) bd1.get("location");
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -47,7 +46,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -57,8 +56,8 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // Add a marker in Location and move the camera
-        LatLng location_coords = new LatLng(location.getLat(),location.getLon());
+        LatLng location_coords = new LatLng(location.getLat(), location.getLon());
         mMap.addMarker(new MarkerOptions().position(location_coords).title(location.getName()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location_coords,zoom));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location_coords, CAMERA_ZOOM));
     }
 }
