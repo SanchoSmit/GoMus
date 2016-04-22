@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ImageView bestLocationImage2;
     private TextView bestLocationText1;
     private TextView bestLocationText2;
-    private ArrayList<Location> best_locations = new ArrayList<>();
     private ArrayList<Tour> tours = new ArrayList<>();
     private ArrayList<Location> locations = new ArrayList<>();
     private DatabaseAccess databaseAccess;
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         databaseAccess.close();
 
         //Best locations init
-        best_locations = getBestLocations(locations);
+        final ArrayList<Location> best_locations = getBestLocations(locations);
 
         // Updating views
         updateRecyclerView();
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(MainActivity.this,LocationViewActivity.class);
-                intent1.putExtra("best_location",best_locations.get(0));
+                intent1.putExtra("location_current",best_locations.get(0));
                 startActivity(intent1);
             }
         });
@@ -102,17 +101,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(MainActivity.this,LocationViewActivity.class);
-                intent2.putExtra("best_location",best_locations.get(1));
+                intent2.putExtra("location_current",best_locations.get(1));
                 startActivity(intent2);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-
-        // TODO: Upgrade texts of Tours and Locations
-        super.onResume();
     }
 
     @Override
@@ -182,20 +174,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return super.onOptionsItemSelected(item);
     }
 
-    // Update recyclerView data
+    /**
+     * Method to update RecyclerView
+     */
     private void updateRecyclerView() {
-        adapter = new ToursAdapter(tours);
+        adapter = new ToursAdapter(tours, this);
         recyclerView.setAdapter(adapter);
     }
 
-    // Update best location data
+    /**
+     * Method to update Best Locations
+     * @param location list of locations
+     */
     private void updateBestLocations(ArrayList<Location> location) {
-                //Best location #1
-                Picasso.with(bestLocationImage1.getContext()).load(location.get(0).getImage()).into(bestLocationImage1);
-                bestLocationText1.setText(location.get(0).getName());
-                //Best location #2
-                Picasso.with(bestLocationImage2.getContext()).load(location.get(1).getImage()).into(bestLocationImage2);
-                bestLocationText2.setText(location.get(1).getName());
+
+        //Best location #1
+        Picasso.with(bestLocationImage1.getContext()).load(location.get(0).getImage()).into(bestLocationImage1);
+        bestLocationText1.setText(location.get(0).getName());
+
+        //Best location #2
+        Picasso.with(bestLocationImage2.getContext()).load(location.get(1).getImage()).into(bestLocationImage2);
+        bestLocationText2.setText(location.get(1).getName());
     }
 
     /**

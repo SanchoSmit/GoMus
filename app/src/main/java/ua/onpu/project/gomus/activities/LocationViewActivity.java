@@ -32,15 +32,16 @@ public class LocationViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_view);
+
         //Getting intent with extras
         Intent intent = getIntent();
         Bundle bd = intent.getExtras();
 
         if(bd != null)
-            location = (Location)bd.get("best_location");
+            location = (Location)bd.get("location_current");
 
         //Toolbar initialization
-        toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_location);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
