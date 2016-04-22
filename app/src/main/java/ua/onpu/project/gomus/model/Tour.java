@@ -1,8 +1,9 @@
 package ua.onpu.project.gomus.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tour {
+public class Tour implements Serializable {
     private int id;
     private String name;
     private String image;

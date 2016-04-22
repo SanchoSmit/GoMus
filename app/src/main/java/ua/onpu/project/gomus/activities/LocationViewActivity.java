@@ -83,7 +83,7 @@ public class LocationViewActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Dialog with information about location
      */
     private void showInfoAlertDialog() {
         LayoutInflater li = getLayoutInflater();
