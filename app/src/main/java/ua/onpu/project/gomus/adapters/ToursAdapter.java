@@ -34,7 +34,7 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
 
     @Override
     public ToursViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tour, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tour, parent, false);
         return new ToursViewHolder(view);
     }
 
@@ -46,7 +46,7 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
         holder.description.setText(currentData.getDescription());
 
         // Image
-        Picasso.with(holder.image.getContext()).load(currentData.getImage()).into(holder.image);
+        Picasso.with(context).load(currentData.getImage()).into(holder.image);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override

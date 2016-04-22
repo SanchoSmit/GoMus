@@ -32,7 +32,7 @@ public class LocationsInTourAdapter extends RecyclerView.Adapter<LocationsInTour
 
     @Override
     public LocationsInTourViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_location, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_location, parent, false);
         return new LocationsInTourViewHolder(view);
     }
 
@@ -43,7 +43,7 @@ public class LocationsInTourAdapter extends RecyclerView.Adapter<LocationsInTour
         holder.name.setText(currentData.getName());
 
         // Image
-        Picasso.with(holder.image.getContext()).load(currentData.getImage()).into(holder.image);
+        Picasso.with(context).load(currentData.getImage()).into(holder.image);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
