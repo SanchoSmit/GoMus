@@ -139,7 +139,6 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
         protected String doInBackground(String... url) {
 
             // For storing data from web service
-
             String data = "";
 
             try{
@@ -165,7 +164,7 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
 
     /**
      * A class to parse the Google Places in JSON format
-     * */
+     */
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>> >{
 
         // Parsing the data in non-ui thread
@@ -288,7 +287,7 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
             br.close();
 
         }catch(Exception e){
-            Log.d("Exception while downloading url", e.toString());
+            Log.d("Exception download url", e.toString());
         }finally{
             iStream.close();
             urlConnection.disconnect();

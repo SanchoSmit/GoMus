@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import ua.onpu.project.gomus.R;
 
@@ -64,10 +65,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // Set default list value
             switch (preferences.getString("application_language", "en")){
                 case "en":
-                    changeLanguage.setValue("English");
+                    changeLanguage.setValue(getResources().getString(R.string.english));
                     break;
                 case "ru":
-                    changeLanguage.setValue("Ukrainian");
+                    changeLanguage.setValue(getResources().getString(R.string.ukrainian));
                     break;
             }
 
@@ -76,17 +77,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                    switch ((String)newValue){
-                        case "English":
-                            editor.putString("application_language", "en");
-                            editor.apply();
-                            showRestartApplicationAlertDialog();
-                            break;
-                        case "Ukrainian":
-                            editor.putString("application_language", "ru");
-                            editor.apply();
-                            showRestartApplicationAlertDialog();
-                            break;
+                    if (getResources().getStringArray(R.array.application_languages)[0].equals((String)newValue)){
+                        editor.putString("application_language", "en");
+                        editor.apply();
+                        showRestartApplicationAlertDialog();
+                    } else if (getResources().getStringArray(R.array.application_languages)[1].equals((String)newValue)){
+                        editor.putString("application_language", "ru");
+                        editor.apply();
+                        showRestartApplicationAlertDialog();
                     }
                     return true;
                 }
@@ -127,15 +125,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         private void showRestartApplicationAlertDialog(){
 
             AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(getActivity());
-            mDialogBuilder.setTitle("Restart Application now?");
-            mDialogBuilder.setMessage("Restarting application is needed for accepting changes");
-            mDialogBuilder.setPositiveButton("Restart",
+            mDialogBuilder.setTitle(getResources().getString(R.string.restart_title));
+            mDialogBuilder.setMessage(getResources().getString(R.string.restart_info));
+            mDialogBuilder.setPositiveButton(getResources().getString(R.string.restart),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             restartApplication();
                         }
                     });
-            mDialogBuilder.setNegativeButton("Later",
+            mDialogBuilder.setNegativeButton(getResources().getString(R.string.later),
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

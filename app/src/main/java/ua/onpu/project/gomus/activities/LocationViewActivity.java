@@ -68,6 +68,7 @@ public class LocationViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+
                 // Finish activity on back button pressed
                 finish();
                 break;
@@ -93,8 +94,7 @@ public class LocationViewActivity extends AppCompatActivity {
         TextView locationPhone = (TextView) promptsView.findViewById(R.id.location_phone);
         TextView locationWebsite = (TextView) promptsView.findViewById(R.id.location_website);
         mDialogBuilder.setView(promptsView);
-        //TODO: Max bug fix
-        mDialogBuilder.setTitle("Location Info");
+        mDialogBuilder.setTitle(getResources().getString(R.string.location_info));
         locationPhone.setText(location.getPhone());
         locationWebsite.setText(location.getWebsite());
         mDialogBuilder.setPositiveButton("Ok",
