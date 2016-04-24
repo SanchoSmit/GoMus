@@ -1,6 +1,8 @@
 package ua.onpu.project.gomus.adapters;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +16,25 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import ua.onpu.project.gomus.R;
+import ua.onpu.project.gomus.activities.LocationViewActivity;
+import ua.onpu.project.gomus.activities.MainActivity;
+import ua.onpu.project.gomus.activities.TourViewActivity;
 import ua.onpu.project.gomus.model.Tour;
 
 public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHolder>{
 
     // List of tours
     private ArrayList<Tour> data;
+    private Context context;
 
-    public ToursAdapter(ArrayList<Tour> tours) {
+    public ToursAdapter(ArrayList<Tour> tours, Context context) {
         data = new ArrayList<>(tours);
+        this.context = context;
     }
 
     @Override
     public ToursViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tour, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tour, parent, false);
         return new ToursViewHolder(view);
     }
 
@@ -39,12 +46,14 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.ToursViewHol
         holder.description.setText(currentData.getDescription());
 
         // Image
-        Picasso.with(holder.image.getContext()).load(currentData.getImage()).into(holder.image);
+        Picasso.with(context).load(currentData.getImage()).into(holder.image);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: tour onClick
+                Intent tourIntent = new Intent(context,TourViewActivity.class);
+                tourIntent.putExtra("tour_current", currentData);
+                context.startActivity(tourIntent);
             }
         });
 

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">GoMus</string>
+    <string name="button_search">Пошук</string>
+    <string name="button_settings">Параметри</string>
+    <string name="image_tour">Зображення Тура</string>
+    <string name="best_locations">Кращі Локації</string>
+    <string name="tours">Тури</string>
+    <string name="about">О Додатку</string>
+    <string name="change_language">Зміна Мови</string>
+    <string name="settings">Параметри</string>
+    <string name="language">Мова</string>
+    <string name="app_language">Мова Контенту</string>
+    <string name="choose_language">Вибір Мови</string>
+    <string name="english">Англійска</string>
+    <string name="ukrainian">Українська</string>
+    <string name="restart">Перезавантажити</string>
+    <string name="later">Потім</string>
+    <string name="restart_title">Перезавантажити додаток зараз?</string>
+    <string name="restart_info">Для прийняття змін необхідно перезавантажити додаток</string>
+    <string name="location_info">Інформація про Локацію</string>
+
+    <string name="text_about">
+        GoMus 2016
+    </string>
+    <string name="button_map">Карта</string>
+    <string name="settings_title">Параметри</string>
+
+    <string-array name="application_languages">
+        <item>Англійська</item>
+        <item>Українська</item>
+    </string-array>
+
+    <string name="title_activity_location_map">LocationMapActivity</string>
+    <string name="button_info">Інформація</string>
+    <string name="map_title">Карта Локацій</string>
+    <string name="tour_map_title">Карта Турів</string>
+
+</resources>

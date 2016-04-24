@@ -1,5 +1,7 @@
 package ua.onpu.project.gomus.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -39,21 +41,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ImageView bestLocationImage2;
     private TextView bestLocationText1;
     private TextView bestLocationText2;
-    private ArrayList<Tour>  tours = new ArrayList<>();
+    private ArrayList<Tour> tours = new ArrayList<>();
     private ArrayList<Location> locations = new ArrayList<>();
+    private DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Database init
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-        tours = databaseAccess.getTours("en");
-        locations = databaseAccess.getLocations("en");
-        databaseAccess.getToursLocations(locations,tours);
-        databaseAccess.close();
 
         // AppBarLayout initialization
         appBarLayout = (AppBarLayout) findViewById(R.id.appBar_main);
@@ -78,20 +73,36 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Database init
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        tours = databaseAccess.getTours(getLanguage());
+        locations = databaseAccess.getLocations(getLanguage());
+        databaseAccess.getToursLocations(locations,tours);
+        databaseAccess.close();
+
+        //Best locations init
+        final ArrayList<Location> best_locations = getBestLocations(locations);
+
+        // Updating views
         updateRecyclerView();
-        updateBestLocations();
+        updateBestLocations(best_locations);
 
         // Best locations onClick listeners
         bestLocation1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: onClick
+                Intent intent1 = new Intent(MainActivity.this,LocationViewActivity.class);
+                intent1.putExtra("location_current",best_locations.get(0));
+                startActivity(intent1);
             }
         });
         bestLocation2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: onClick
+                Intent intent2 = new Intent(MainActivity.this,LocationViewActivity.class);
+                intent2.putExtra("location_current",best_locations.get(1));
+                startActivity(intent2);
             }
         });
     }
@@ -153,34 +164,56 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.button_settings){
-                // TODO: settings
-                return true;
+
+            // Open SettingsActivity
+            Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
+            startActivity(settingsActivity);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    // Update recyclerView data
+    /**
+     * Method to update RecyclerView
+     */
     private void updateRecyclerView() {
-        adapter = new ToursAdapter(tours);
+        adapter = new ToursAdapter(tours, this);
         recyclerView.setAdapter(adapter);
     }
 
-    // Update best location data
-    private void updateBestLocations() {
-        for(Location location: locations) {
-            if(location.getRating()==4.0){
-                Picasso.with(bestLocationImage1.getContext()).load(location.getImage()).into(bestLocationImage1);
-                bestLocationText1.setText(location.getName());
-            }
-            else if(location.getRating()==5.0)
-            {
-                Picasso.with(bestLocationImage2.getContext()).load(location.getImage()).into(bestLocationImage2);
-                bestLocationText2.setText(location.getName());
-            }
+    /**
+     * Method to update Best Locations
+     * @param location list of locations
+     */
+    private void updateBestLocations(ArrayList<Location> location) {
 
+        //Best location #1
+        Picasso.with(bestLocationImage1.getContext()).load(location.get(0).getImage()).into(bestLocationImage1);
+        bestLocationText1.setText(location.get(0).getName());
+
+        //Best location #2
+        Picasso.with(bestLocationImage2.getContext()).load(location.get(1).getImage()).into(bestLocationImage2);
+        bestLocationText2.setText(location.get(1).getName());
+    }
+
+    /**
+     * Getting best locations method
+     * @param location list of all locations
+     * @return two best locations
+     */
+    private ArrayList<Location> getBestLocations(ArrayList<Location> location) {
+        ArrayList<Location> best_locations = new ArrayList<>();
+        for(Location loc: location) {
+            if(loc.getRating()==4.0){
+                best_locations.add(loc);
+            }
+            else if(loc.getRating()==5.0)
+            {
+                best_locations.add(loc);
+            }
         }
+        return best_locations;
     }
 
     /**
@@ -199,5 +232,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         return filteredListData;
+    }
+
+    /**
+     * Language getting method
+     * @return application language
+     */
+    private String getLanguage(){
+        SharedPreferences preferences = getSharedPreferences("GoMusSetting", MODE_PRIVATE);
+        return preferences.getString("application_language", "en");
     }
 }

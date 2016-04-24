@@ -7,67 +7,71 @@
     android:background="@color/colorWhite">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar_main"
+        android:id="@+id/appBar_location"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height">
+        android:layout_height="320dp">
+
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar_main"
+            android:id="@+id/collapsingToolbar_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="@color/colorGrey"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleTextAppearance="@style/AppBarTextAppearance"
-            app:expandedTitleMargin="10dp"
-            app:expandedTitleGravity="bottom|start">
+            app:expandedTitleMarginBottom="50dp"
+            app:expandedTitleMarginStart="15dp"
+            app:expandedTitleTextAppearance="@style/AppBarTextAppearanceDark"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <!-- Place for map -->
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map_tour"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                tools:context="ua.onpu.project.gomus.activities.TourViewActivity" />
+            
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:background="@color/colorGrey"
+                android:layout_marginTop="240dp"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tour_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:textAppearance="@style/AppBarTextAppearance"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/best_locations"/>
-
-                <!-- Including best location item -->
-                <include layout="@layout/item_locations_best"/>
+                    android:layout_marginLeft="15dp"
+                    android:maxLines="1"
+                    android:layout_marginTop="45dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_main"
+                android:id="@+id/toolbar_tours"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView_main"
+        android:id="@+id/recycleView_tour"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
 
 </android.support.design.widget.CoordinatorLayout>

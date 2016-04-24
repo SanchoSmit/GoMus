@@ -144,12 +144,11 @@ public class DatabaseAccess {
 
             for(Tour tour :allTours){
                 if(tour.getId()==tourId){
-                    for(Location location : allLocations)
-                 {
-                     if(location.getId()==locationId) {
-                      tour.addLocation(location);
-                     }
-                 }
+                    for(Location location : allLocations) {
+                        if(location.getId()==locationId) {
+                            tour.addLocation(location);
+                        }
+                    }
                 }
             }
             cursor.moveToNext();
