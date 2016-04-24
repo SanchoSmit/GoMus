@@ -33,6 +33,6 @@
     <string name="title_activity_location_map">LocationMapActivity</string>
     <string name="button_info">Інформація</string>
     <string name="map_title">Карта Локацій</string>
-
+    <string name="tour_map_title">Карта Турів</string>
 
 </resources>

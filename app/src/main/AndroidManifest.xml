@@ -49,7 +49,8 @@
 
         <activity
             android:name=".activities.LocationMapActivity"
-            android:label="@string/title_activity_location_map"/>
+            android:label="@string/title_activity_location_map" />
+        <activity android:name=".activities.TourMapActivity"></activity>
     </application>
 
 </manifest>

@@ -48,6 +48,7 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
     private GoogleMap mMap;
     private static final int CAMERA_ZOOM = 14;
     private ArrayList<LatLng> markers;
+    private ArrayList<LatLng> points = null;
     private static final String GOOGLE_API_KEY = "AIzaSyCjFgqDZ8jxhabcuDDw7K0erNKVfrQljTk";
 
     @Override
@@ -116,6 +117,16 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
         String url = getDirectionsUrl(locations);
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Intent intent = new Intent(TourViewActivity.this,TourMapActivity.class);
+                intent.putExtra("markers",markers);
+                intent.putExtra("points",points);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -190,7 +201,6 @@ public class TourViewActivity extends AppCompatActivity implements OnMapReadyCal
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
 
-            ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
